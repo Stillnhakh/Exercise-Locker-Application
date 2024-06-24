@@ -1,0 +1,69 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LockerApp {
+    private JFrame frame;
+    private JTextField passcodeField;
+    private JButton enterButton;
+    private JLabel statusLabel;
+    private String savedPassword = null;
+
+    public LockerApp() {
+        frame = new JFrame("Locker Application");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 200);
+        frame.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        passcodeField = new JTextField(20);
+        enterButton = new JButton("Enter");
+        statusLabel = new JLabel("Enter passcode to set password");
+
+        panel.add(new JLabel("Passcode:"));
+        panel.add(passcodeField);
+        panel.add(enterButton);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(statusLabel, BorderLayout.SOUTH);
+
+        enterButton.addActionListener(new ActionListener() {
+        
+            public void actionPerformed(ActionEvent e) {
+                handleEnterButton();
+            }
+        });
+
+        frame.setVisible(true);
+    }
+
+    private void handleEnterButton() {
+        String enteredPasscode = passcodeField.getText();
+
+        if (savedPassword == null) {
+         
+            savedPassword = enteredPasscode;
+            statusLabel.setText("Password Set");
+        } else 
+            if (savedPassword.equals(enteredPasscode)) {
+                statusLabel.setText("Correct Password");
+            } else {
+                statusLabel.setText("Incorrect Password");
+            }
+        }
+
+        passcodeField.setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+         
+            public void run() {
+                new LockerApp();
+            }
+        });
+    }
+}
+
